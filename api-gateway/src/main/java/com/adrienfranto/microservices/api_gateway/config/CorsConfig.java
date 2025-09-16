@@ -1,4 +1,5 @@
-package com.techie.microservices.api_gateway.config;
+package com.adrienfranto.microservices.api_gateway.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

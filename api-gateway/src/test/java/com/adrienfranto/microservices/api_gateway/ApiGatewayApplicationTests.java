@@ -1,4 +1,4 @@
-package com.techie.microservices.api_gateway;
+package com.adrienfranto.microservices.api_gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
