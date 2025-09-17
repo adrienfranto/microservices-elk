@@ -45,7 +45,7 @@ public class Routes {
     }
 
     @Bean
-    public RouteLocator orderServiceSwaggerRoute(RouteLocatorBuilder builder) {
+    public RouteLocator travailServiceSwaggerRoute(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("travail-service-swagger", r -> r
                         .path("/aggregate/travail-service/v3/api-docs")
@@ -60,7 +60,7 @@ public class Routes {
     public RouteLocator groupeServiceRoute(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("groupe_service", r -> r
-                        .path("/api/groupe/**")
+                        .path("/api/groupes/**")
                         .filters(f -> f.circuitBreaker(config -> config
                                 .setName("groupeServiceCircuitBreaker")
                                 .setFallbackUri("forward:/fallback/groupe")))
@@ -70,7 +70,7 @@ public class Routes {
 
 
     @Bean
-    public RouteLocator inventoryServiceSwaggerRoute(RouteLocatorBuilder builder) {
+    public RouteLocator groupeServiceSwaggerRoute(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("groupe-service-swagger", r -> r
                         .path("/aggregate/groupe-service/v3/api-docs")
