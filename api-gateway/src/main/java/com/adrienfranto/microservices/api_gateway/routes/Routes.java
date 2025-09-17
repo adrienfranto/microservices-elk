@@ -12,7 +12,7 @@ public class Routes {
     public RouteLocator etudiantServiceRoute(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("etudiant_service", r -> r
-                        .path("/api/etudiant/**")
+                        .path("/api/etudiants/**")
                         .filters(f -> f.circuitBreaker(config -> config
                                 .setName("etudiantServiceCircuitBreaker")
                                 .setFallbackUri("forward:/fallback/etudiant")))
