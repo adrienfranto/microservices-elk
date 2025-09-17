@@ -1,34 +1,83 @@
 package com.adrienfranto.microservices.api_gateway.routes;
 
-import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions;
-import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.function.RequestPredicates;
-import org.springframework.web.servlet.function.RouterFunction;
-import org.springframework.web.servlet.function.ServerResponse;
 
 @Configuration
 public class Routes {
 
     @Bean
-    public RouterFunction<ServerResponse> etudiantServiceRoute() {
-        return GatewayRouterFunctions.route("etudiant_service")
-                .route(RequestPredicates.path("/api/etudiants/**"), HandlerFunctions.http("http://192.168.88.13:8080"))
+    public RouteLocator etudiantServiceRoute(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("etudiant_service", r -> r
+                        .path("/api/etudiant/**")
+                        .filters(f -> f.circuitBreaker(config -> config
+                                .setName("etudiantServiceCircuitBreaker")
+                                .setFallbackUri("forward:/fallback/etudiant")))
+                        .uri("http://192.168.88.13:8080"))
                 .build();
     }
 
     @Bean
-    public RouterFunction<ServerResponse> orderServiceRoute() {
-        return GatewayRouterFunctions.route("travail_service")
-                .route(RequestPredicates.path("/api/travail/**"), HandlerFunctions.http("http://192.168.88.13:8081"))
+    public RouteLocator etudiantServiceSwaggerRoute(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("etudiant-service-swagger", r -> r
+                        .path("/aggregate/etudiant-service/v3/api-docs")
+                        .filters(f -> f.rewritePath(
+                                "/aggregate/etudiant-service/v3/api-docs",
+                                "/v3/api-docs"))
+                        .uri("http://192.168.88.13:8080"))
                 .build();
     }
 
     @Bean
-    public RouterFunction<ServerResponse> inventoryRoute() {
-        return GatewayRouterFunctions.route("groupe_service")
-                .route(RequestPredicates.path("/api/groupes/**"), HandlerFunctions.http("http://192.168.88.13:8082"))
+    public RouteLocator travailServiceRoute(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("travail_service", r -> r
+                        .path("/api/travail/**")
+                        .filters(f -> f.circuitBreaker(config -> config
+                                .setName("travailServiceCircuitBreaker")
+                                .setFallbackUri("forward:/fallback/travail")))
+                        .uri("http://192.168.88.13:8081"))
+                .build();
+    }
+
+    @Bean
+    public RouteLocator orderServiceSwaggerRoute(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("travail-service-swagger", r -> r
+                        .path("/aggregate/travail-service/v3/api-docs")
+                        .filters(f -> f.rewritePath(
+                                "/aggregate/travail-service/v3/api-docs",
+                                "/v3/api-docs"))
+                        .uri("http://192.168.88.13:8081"))
+                .build();
+    }
+
+    @Bean
+    public RouteLocator groupeServiceRoute(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("groupe_service", r -> r
+                        .path("/api/groupe/**")
+                        .filters(f -> f.circuitBreaker(config -> config
+                                .setName("groupeServiceCircuitBreaker")
+                                .setFallbackUri("forward:/fallback/groupe")))
+                        .uri("http://192.168.88.13:8082"))
+                .build();
+    }
+
+
+    @Bean
+    public RouteLocator inventoryServiceSwaggerRoute(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("groupe-service-swagger", r -> r
+                        .path("/aggregate/groupe-service/v3/api-docs")
+                        .filters(f -> f.rewritePath(
+                                "/aggregate/groupe-service/v3/api-docs",
+                                "/v3/api-docs"))
+                        .uri("http://192.168.88.13:8082"))
                 .build();
     }
 }
