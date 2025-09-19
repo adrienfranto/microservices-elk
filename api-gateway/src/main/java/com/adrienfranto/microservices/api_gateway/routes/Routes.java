@@ -16,7 +16,7 @@ public class Routes {
                         .filters(f -> f.circuitBreaker(config -> config
                                 .setName("etudiantServiceCircuitBreaker")
                                 .setFallbackUri("forward:/fallback/etudiant")))
-                        .uri("http://192.168.88.13:8080"))
+                        .uri("http://192.168.56.50:8080"))
                 .build();
     }
 
@@ -28,7 +28,7 @@ public class Routes {
                         .filters(f -> f.rewritePath(
                                 "/aggregate/etudiant-service/v3/api-docs",
                                 "/v3/api-docs"))
-                        .uri("http://192.168.88.13:8080"))
+                        .uri("http://192.168.56.50:8080"))
                 .build();
     }
 
@@ -40,7 +40,7 @@ public class Routes {
                         .filters(f -> f.circuitBreaker(config -> config
                                 .setName("travailServiceCircuitBreaker")
                                 .setFallbackUri("forward:/fallback/travail")))
-                        .uri("http://192.168.88.13:8081"))
+                        .uri("http://192.168.56.50:8081"))
                 .build();
     }
 
@@ -52,7 +52,7 @@ public class Routes {
                         .filters(f -> f.rewritePath(
                                 "/aggregate/travail-service/v3/api-docs",
                                 "/v3/api-docs"))
-                        .uri("http://192.168.88.13:8081"))
+                        .uri("http://192.168.56.50:8081"))
                 .build();
     }
 
@@ -64,7 +64,7 @@ public class Routes {
                         .filters(f -> f.circuitBreaker(config -> config
                                 .setName("groupeServiceCircuitBreaker")
                                 .setFallbackUri("forward:/fallback/groupe")))
-                        .uri("http://192.168.88.13:8082"))
+                        .uri("http://192.168.56.50:8082"))
                 .build();
     }
 
@@ -77,7 +77,7 @@ public class Routes {
                         .filters(f -> f.rewritePath(
                                 "/aggregate/groupe-service/v3/api-docs",
                                 "/v3/api-docs"))
-                        .uri("http://192.168.88.13:8082"))
+                        .uri("http://192.168.56.50:8082"))
                 .build();
     }
 }
